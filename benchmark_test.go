@@ -19,8 +19,8 @@ func RandStringBytes(n int) string {
 }
 
 func BenchmarkCalculateWordValue(b *testing.B) {
-	// Initialize a dAWG
-	d := &dAWG{root: &dAWGNode{children: make(map[rune]*dAWGNode)}}
+	// Initialize a trie
+	d := &trie{root: &trieNode{children: make(map[rune]*trieNode)}}
 
 	valuesFile, err := os.Open("value_file_2.txt")
 	if err != nil {

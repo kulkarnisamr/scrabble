@@ -11,29 +11,27 @@ import (
 	"time"
 )
 
-// dAWGNode represents a node in the dAWG
-type dAWGNode struct {
-	children map[rune]*dAWGNode
+// trieNode represents a node in the trie
+type trieNode struct {
+	children map[rune]*trieNode
 	value    int
 	isEnd    bool
-	index    int
 }
 
-// dAWG represents a directed acyclic word graph
-type dAWG struct {
-	root *dAWGNode
+type trie struct {
+	root *trieNode
 }
 
-func newDAWG() *dAWG {
-	return &dAWG{root: &dAWGNode{children: make(map[rune]*dAWGNode)}}
+func newTrie() *trie {
+	return &trie{root: &trieNode{children: make(map[rune]*trieNode)}}
 }
 
-// insert inserts a word into the dAWG
-func (d *dAWG) insert(word string, value int) {
-	node := d.root
+// insert inserts a word into the trie
+func (t *trie) insert(word string, value int) {
+	node := t.root
 	for _, char := range word {
 		if node.children[char] == nil {
-			node.children[char] = &dAWGNode{children: make(map[rune]*dAWGNode)}
+			node.children[char] = &trieNode{children: make(map[rune]*trieNode)}
 		}
 		node = node.children[char]
 	}
@@ -42,14 +40,14 @@ func (d *dAWG) insert(word string, value int) {
 }
 
 // calculateWordValue calculates the value of a word by traversing the DAWG
-func (d *dAWG) calculateWordValue(word string) int {
+func (t *trie) calculateWordValue(word string) int {
 	value := 0
 	i := 0
 	for i < len(word) {
 		found := false
 		for j := len(word); j > i; j-- {
 			substring := word[i:j]
-			if val, ok := d.search(substring); ok {
+			if val, ok := t.search(substring); ok {
 				value += *val
 				i = j
 				found = true
@@ -63,13 +61,13 @@ func (d *dAWG) calculateWordValue(word string) int {
 	return value
 }
 
-// search searches for a word in the dAWG
-func (d *dAWG) search(word string) (*int, bool) {
-	return dfs(d.root, word)
+// search searches for a word in the trie
+func (t *trie) search(word string) (*int, bool) {
+	return dfs(t.root, word)
 }
 
-// dfs performs a depth first search on the dAWG and returns true if we reach the last children nodes
-func dfs(curr *dAWGNode, w string) (*int, bool) {
+// dfs performs a depth first search on the trie and returns true if we reach the last children nodes
+func dfs(curr *trieNode, w string) (*int, bool) {
 	for i := range w {
 		if _, ok := curr.children[rune(w[i])]; !ok {
 			return nil, false
@@ -111,7 +109,10 @@ func main() {
 		log.Fatal("values file not specified")
 	}
 
-	dawg := buildDAWG(valuesFileName)
+	trie, err := buildTrie(valuesFileName)
+	if err != nil {
+		panic("failed to build a trie")
+	}
 
 	// read dict file
 	dict, err := os.Open(dictionaryFileName)
@@ -126,7 +127,7 @@ func main() {
 	scanner := bufio.NewScanner(dict)
 	for scanner.Scan() {
 		word := scanner.Text()
-		value := dawg.calculateWordValue(strings.ToLower(word))
+		value := trie.calculateWordValue(strings.ToLower(word))
 		if value > highestValue {
 			result[word] = node{
 				key:   word,
@@ -146,16 +147,16 @@ func main() {
 	printHighestValueWords(result, highestValue)
 
 	endTime := time.Now().UTC()
-	fmt.Printf("total time taken to process the dawg way: %v\n", endTime.Sub(startTime).Seconds())
+	fmt.Printf("total time taken to process the trie way: %v\n", endTime.Sub(startTime).Seconds())
 }
 
-func buildDAWG(valuesFileName string) *dAWG {
-	// Read values file into a dAWG
-	dawg := newDAWG()
+func buildTrie(valuesFileName string) (*trie, error) {
+	// Read values file into a trie
+	t := newTrie()
 	valuesFile, err := os.Open(valuesFileName)
 	if err != nil {
 		fmt.Println("Error opening values file:", err)
-		os.Exit(1)
+		return nil, err
 	}
 	defer valuesFile.Close()
 
@@ -166,17 +167,17 @@ func buildDAWG(valuesFileName string) *dAWG {
 		_, err := fmt.Sscanf(scanner.Text(), "%s %d", &key, &val)
 		if err != nil {
 			fmt.Println("Error parsing values file:", err)
-			os.Exit(1)
+			return nil, err
 		}
-		dawg.insert(strings.ToLower(key), val)
+		t.insert(strings.ToLower(key), val)
 	}
 
 	if scanner.Err() != nil {
 		fmt.Println("Error reading values file:", scanner.Err())
-		os.Exit(1)
+		return nil, err
 	}
 
-	return dawg
+	return t, nil
 }
 
 func printHighestValueWords(result map[string]node, highestValue int) {

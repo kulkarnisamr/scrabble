@@ -8,8 +8,8 @@ import (
 )
 
 func TestWordValue(t *testing.T) {
-	// Initialize a dAWG
-	t1 := &dAWG{root: &dAWGNode{children: make(map[rune]*dAWGNode)}}
+	// Initialize a trie
+	t1 := &trie{root: &trieNode{children: make(map[rune]*trieNode)}}
 
 	valuesFile, err := os.Open("value_file_2.txt")
 	if err != nil {
