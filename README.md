@@ -1,6 +1,8 @@
 # scrabble
 A version of scrabble that uses Trie and prints the highest valued words given a dictionary of words and a file with single characters or strings and their tile values
 
+Note: The final list of words is not lexicographically sorted
+
 ### How to run
 ```
 make build
@@ -90,8 +92,6 @@ ok  	github.com/kulkarnisamr/scrabble	14.538s
 2. **Fast insertion and lookup**: Insertion and search operations in a trie have a time complexity of O(m), where m is the length of the string. This makes trie operations efficient for string-related tasks.
 3. **Keys are ordered**: Tries maintain a lexicographical order of the keys, making it easy to iterate over all keys in sorted order.
 4. **Simple implementation**: Implementation is quite easy compared to a DAWG
-
-7. **Improved Lookup Performance**: DAWGs can lead to faster lookup times for string search operations as they eliminate redundancy and allow for more efficient traversal.
 
 ### Cons
 1. **Space efficiency**: If the input value files were large, DAWGs would be more space-efficient compared to plain tries because they allow suffix sharing.
