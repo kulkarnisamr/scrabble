@@ -1,7 +1,7 @@
 # scrabble
 A version of scrabble that prints the highest valued words given a dictionary of words and a file with single characters or strings and their tile values
 
-# How to run
+### How to run
 ```
 make build
 ./scrabble -dict=dictionary.txt -values=value_file_2.txt
