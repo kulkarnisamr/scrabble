@@ -95,8 +95,9 @@ ok  	github.com/kulkarnisamr/scrabble	14.538s
 4. **Simple implementation**: Implementation is quite easy compared to a DAWG
 
 ### Cons
-1. **Space efficiency**: If the input value files were large, DAWGs would be more space-efficient compared to plain tries because they allow suffix sharing.
+1. **Space efficiency**: If the input value files were large, DAWGs would be more space-efficient compared to plain tries because they allow suffix sharing and the number of nodes and edges remain low.
 2. **High Memory Consumption**: Tries can have higher memory consumption compared to DAWGs, especially when the input set is large or when there are many keys with distinct prefixes.
+3. **Not ideal for a changing dataset**: If a dataset keeps changing, the overhead of insertion and deletion can offset the advantages of using a Trie.
 
 ### Further improvements:
 Add DAWG implementation which will bring forth its advantages with space compaction when we use large files.
