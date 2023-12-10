@@ -11,6 +11,12 @@ OR
 go run ./scrabble.go -dict=dictionary.txt -values=value_file_2.txt
 ```
 
+You can also run a default version of the program which uses Collins dictionary words
+and original scrabble tile values by running:
+```
+make collins
+```
+
 ### Unit tests
 ```
 make cover
