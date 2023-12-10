@@ -63,7 +63,7 @@ Memory:	32 GB
 ### Complexity
 1. **Insertion**: The insertion operation involves traversing the trie to insert a new word. The time complexity is O(m), where m is the length of the word being inserted.
 2. **CalculateWordValue**: The time complexity of calculating the value of a word is O(n), where n is the length of the word. This is because we traverse the Trie from the root to the corresponding node for the word.
-3. **Space Complexity**: The space complexity of a trie is influenced by the total number of nodes and the average length of an entry in the values file. For a trie with n keys, the space complexity is O(n * m), where m is the average length of the keys.
+3. **Space Complexity**: The space complexity of a trie is influenced by the total number of nodes and the average length of a key. For a trie with n keys, the space complexity is O(n * m), where m is the average length of the keys.
 
 Overall, the time complexity of constructing the Trie (insertion) is influenced by the total number of vertices and edges in the trie. 
 The time complexity for looking up the value of a word is primarily influenced by the length of the word.
