@@ -168,7 +168,7 @@ func buildDAWG(valuesFileName string) *dAWG {
 			fmt.Println("Error parsing values file:", err)
 			os.Exit(1)
 		}
-		dawg.insert(key, val)
+		dawg.insert(strings.ToLower(key), val)
 	}
 
 	if scanner.Err() != nil {
