@@ -59,8 +59,8 @@ Memory:	32 GB
 ```
 
 ### Complexity
-1. Insertion: The insertion operation involves traversing the trie to insert a new word. The time complexity is O(m), where m is the length of the word being inserted.
-2. CalculateWordValue: The time complexity of calculating the value of a word is O(n), where n is the length of the word. This is because we traverse the DAWG from the root to the corresponding node for the word.
+1. **Insertion**: The insertion operation involves traversing the trie to insert a new word. The time complexity is O(m), where m is the length of the word being inserted.
+2. **CalculateWordValue**: The time complexity of calculating the value of a word is O(n), where n is the length of the word. This is because we traverse the DAWG from the root to the corresponding node for the word.
 
 Overall, the time complexity of constructing the DAWG (insertion and compaction) is influenced by the total number of vertices and edges in the DAWG. 
 The time complexity for looking up the value of a word is primarily influenced by the length of the word.
