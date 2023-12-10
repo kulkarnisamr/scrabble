@@ -67,10 +67,10 @@ The time complexity for looking up the value of a word is primarily influenced b
 
 ### Approach:
 **DAWG**: Directed Acyclic Word Graph is a data structure that is used to store a set of strings. It is a compacted trie. With the current input files,
-there isn't a clear advantage between using a DAWG or a Trie. Hence, I have not included the compaction method. However, if the input file is large, the DAWG will be more compact and hence will take less space.
+there isn't a clear advantage between using a DAWG or a Trie so the current implementation is just a glorified Trie since compaction is not implemented. However, if the input file were large, the DAWG will be more compact and hence will take less space making it easier to extend the current functionality.
 
 ### Options considered:
-1. **Trie**: The implementation is quite similar and the time complexity is the same as DAWG. The benchmarks were also comparable.
+1. **Trie**: The implementation is very similar and the time complexity is the same as DAWG. The benchmarks were also comparable.
 ```
 goos: darwin
 goarch: amd64
